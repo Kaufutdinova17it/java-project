@@ -46,8 +46,8 @@
 
 ##  Структура проекта
 src/main/java/com.hfbe_Polina.web_project
-├── controllers
-├── entities
+- ├── controllers
+- ├── entities
 ├── repositories
 ├── services
 └── WebProjectApplication.java

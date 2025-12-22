@@ -48,14 +48,14 @@
 src/main/java/com.hfbe_Polina.web_project
 - ├── controllers
 - ├── entities
-├── repositories
-├── services
-└── WebProjectApplication.java
+- ├── repositories
+- ├── services
+- └── WebProjectApplication.java
 
 src/main/resources
-├── templates
-├── static
-└── application.properties
+- ├── templates
+- ├── static
+- └── application.properties
 
 ##  Документация
 

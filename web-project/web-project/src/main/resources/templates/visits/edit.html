@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать визит</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="container">
+
+    <div th:replace="fragments/menu :: menu"></div>
+
+    <h1>Редактировать визит</h1>
+
+    <form th:action="@{'/visits/edit/' + ${visit.id}}" th:object="${visit}" method="post">
+
+        <label>Дата визита:</label>
+        <input type="date" th:field="*{visitDate}">
+        <div class="error-block" th:if="${#fields.hasErrors('visitDate')}" th:errors="*{visitDate}"></div>
+
+        <label>Диагноз:</label>
+        <input type="text" th:field="*{diagnosis}">
+        <div class="error-block" th:if="${#fields.hasErrors('diagnosis')}" th:errors="*{diagnosis}"></div>
+
+        <label>Лечение:</label>
+        <input type="text" th:field="*{treatment}">
+        <div class="error-block" th:if="${#fields.hasErrors('treatment')}" th:errors="*{treatment}"></div>
+
+        <label>Животное:</label>
+        <select th:field="*{pet}">
+            <option th:each="p : ${pets}"
+                    th:value="${p.id}"
+                    th:text="${p.name}"
+                    th:selected="${visit.pet != null and p.id == visit.pet.id}">
+            </option>
+        </select>
+        <div class="error-block" th:if="${#fields.hasErrors('pet')}" th:errors="*{pet}"></div>
+
+        <button type="submit">Сохранить</button>
+    </form>
+
+</div>
+
+</body>
+</html>

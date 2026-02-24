@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать животное</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="container">
+
+    <div th:replace="~{fragments/menu :: menu}"></div>
+
+    <h1>Редактировать животное</h1>
+
+    <form th:action="@{'/pets/edit/' + ${pet.id}}" th:object="${pet}" method="post">
+
+        <!-- Имя — единственное редактируемое поле -->
+        <label>Имя:</label>
+        <input type="text" th:field="*{name}">
+        <div class="error-block" th:errors="*{name}"></div>
+
+        <!-- Вид — только чтение -->
+        <label>Вид:</label>
+        <input type="text" th:field="*{species}" readonly>
+
+        <!-- Порода — только чтение -->
+        <label>Порода:</label>
+        <input type="text" th:field="*{breed}" readonly>
+
+        <!-- Дата рождения — только чтение -->
+        <label>Дата рождения:</label>
+        <input type="date" th:field="*{birthDate}" readonly>
+
+        <!-- Номер паспорта — только чтение -->
+        <label>Номер паспорта:</label>
+        <input type="text" th:field="*{passportNumber}" readonly>
+
+        <!-- Владелец — только просмотр -->
+        <label>Владелец:</label>
+        <select th:field="*{owner.id}" disabled>
+            <option th:each="o : ${owners}"
+                    th:value="${o.id}"
+                    th:text="${o.email}">
+            </option>
+        </select>
+
+        <!-- скрытое поле, чтобы owner.id отправлялся -->
+        <input type="hidden" th:field="*{owner.id}">
+
+        <button type="submit">Сохранить</button>
+    </form>
+
+</div>
+
+</body>
+</html>

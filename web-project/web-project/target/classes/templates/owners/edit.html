@@ -1,0 +1,88 @@
+<!--
+    /**
+     * Шаблон редактирования владельца.
+     *
+     * <p>
+     * Данный HTML‑шаблон отображает форму редактирования данных владельца.
+     * Пользователь может изменить имя, телефон и email владельца. Шаблон
+     * поддерживает отображение ошибок валидации, включая ошибки уникальности
+     * телефона и email, которые формируются на стороне контроллера.
+     * </p>
+     *
+     * <p><b>Назначение:</b></p>
+     * <ul>
+     *     <li>Редактирование данных существующего владельца</li>
+     *     <li>Отображение ошибок валидации, связанных с полями формы</li>
+     *     <li>Сохранение обновлённых данных владельца</li>
+     * </ul>
+     *
+     * <p><b>Основные элементы формы:</b></p>
+     * <ul>
+     *     <li><b>Имя</b> — текстовое поле, обязательное для заполнения</li>
+     *     <li><b>Телефон</b> — текстовое поле, проверяется на уникальность</li>
+     *     <li><b>Email</b> — поле email, обязательное, проверяется на уникальность</li>
+     * </ul>
+     *
+     * <p><b>Ошибки, которые может отображать шаблон:</b></p>
+     * <ul>
+     *     <li>Ошибки привязки (BindingResult) для полей name и email</li>
+     *     <li>phoneError — ошибка уникальности телефона</li>
+     *     <li>emailError — ошибка уникальности email</li>
+     * </ul>
+     *
+     * <p><b>Особенности реализации:</b></p>
+     * <ul>
+     *     <li>Шаблон полностью совместим с логикой OwnerController</li>
+     *     <li>Ошибки уникальности передаются через model.addAttribute()</li>
+     *     <li>Форма отправляется методом POST на маршрут /owners/edit/{id}</li>
+     * </ul>
+     *
+     * <p><b>Используется в случаях:</b></p>
+     * <ul>
+     *     <li>Когда пользователь редактирует данные владельца</li>
+     *     <li>Когда сервер возвращает ошибки валидации</li>
+     *     <li>Когда требуется обновить контактные данные владельца</li>
+     * </ul>
+     */
+-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать владельца</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="container">
+
+    <div th:replace="~{fragments/menu :: menu}"></div>
+
+    <h1>Редактировать владельца</h1>
+
+    <form th:action="@{'/owners/edit/' + ${owner.id}}" th:object="${owner}" method="post">
+
+        <label>Имя:</label>
+        <input type="text" th:field="*{name}">
+        <div class="error-block" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+
+        <label>Телефон:</label>
+        <input type="text" th:field="*{phone}">
+        <div class="error-block" th:if="${phoneError}" th:text="${phoneError}"></div>
+
+
+        <label>Email владельца:</label>
+        <input type="email" th:field="*{email}" required>
+        <div class="error-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        <div class="error-block" th:if="${emailError}" th:text="${emailError}"></div>
+
+
+
+        <button type="submit">Сохранить</button>
+    </form>
+
+</div>
+
+</body>
+</html>
